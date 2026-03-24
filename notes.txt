@@ -1,0 +1,618 @@
+CH-01: Introduction to Backend Development
+✅ Definition
+
+👉 Backend is the server-side part of a web application
+👉 It handles:
+
+Data processing
+Database interaction
+API creation
+🧠 Backend Responsibilities
+Handle client requests
+Process data
+Send response
+Authentication & security
+Database management
+🔹 Frontend vs Backend
+Frontend	Backend
+UI/UX	Logic & data
+Runs in browser	Runs on server
+HTML, CSS, JS	Node.js, Python, Java
+🔹 Backend Technologies
+Node.js
+Python
+Java
+PHP
+🔹 What is API?
+
+👉 API = Application Programming Interface
+👉 Used for communication between frontend & backend
+
+Example:
+
+GET /users
+POST /login
+🔹 CH-02: Node.js & NPM Basics
+✅ What is Node.js?
+
+👉 Node.js is a runtime environment to run JavaScript outside browser
+
+👉 Built on V8 Engine (Chrome)
+
+🔹 Features
+Fast (non-blocking)
+Event-driven
+Scalable
+🔹 What is NPM?
+
+👉 NPM = Node Package Manager
+
+👉 Used to:
+
+Install packages
+Manage dependencies
+🔹 Commands
+npm init        // create package.json
+npm install     // install packages
+npm install express
+🔹 CH-03: First Program in Node.js
+✅ Code
+// first program
+console.log("Hello Backend");
+🔹 Run Program
+node index.js
+🔹 Global Objects
+console
+process
+__dirname
+🔹 CH-04: Using Nodemon Package
+✅ What is Nodemon?
+
+👉 Automatically restarts server when file changes
+
+🔹 Install
+npm install nodemon --save-dev
+🔹 Use
+npx nodemon index.js
+🔹 package.json Script
+"scripts": {
+  "start": "nodemon index.js"
+}
+🔹 Run
+npm start
+🔹 CH-05: Modules in Node.js (require)
+✅ What are Modules?
+
+👉 Modules are reusable code files
+
+🔹 Types
+Built-in modules
+User-defined modules
+Third-party modules
+🔹 Import Module
+const http = require("http");
+🔹 Export Module
+Default Export
+module.exports = say;
+Named Export
+module.exports = { say, greet };
+🔹 Import
+const { say, greet } = require("./file");
+🔹 CH-06: Creating Server in Node.js
+✅ Import HTTP Module
+const http = require("http");
+✅ Create Server
+const server = http.createServer((req, res) => {
+
+    res.end("Server Running");
+
+});
+✅ Start Server
+server.listen(8000, () => {
+    console.log("Server running on port 8000");
+});
+🔹 Routing
+const server = http.createServer((req, res) => {
+
+    if (req.url === "/") {
+        res.end("Home Page");
+    }
+
+    else if (req.url === "/about") {
+        res.end("About Page");
+    }
+
+    else {
+        res.end("404 Not Found");
+    }
+
+});
+🔹 JSON Response
+if (req.url === "/api") {
+
+    let data = {
+        status: 1,
+        message: "API Data"
+    };
+
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(data));
+}
+🔹 Important Concepts
+req (Request Object)
+req.url
+req.method
+res (Response Object)
+res.end()
+res.write()
+res.setHeader()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+===============================
+EXPRESS.JS 
+===============================
+
+--------------------------------
+1. WHAT IS EXPRESS.JS
+--------------------------------
+Express.js is a web framework for Node.js.
+
+It is used to:
+- Create servers easily
+- Handle routing
+- Build APIs
+- Manage middleware
+
+Why use Express?
+- Simple and clean code
+- Faster development
+- Less boilerplate compared to core Node.js
+
+--------------------------------
+2. INSTALLATION
+--------------------------------
+
+Step 1: Initialize project
+npm init -y
+
+Step 2: Install Express
+npm install express
+
+Step 3: Install Nodemon (optional)
+npm install nodemon --save-dev
+
+--------------------------------
+3. BASIC SERVER SETUP
+--------------------------------
+
+const express = require("express");   // import express
+const app = express();               // create app
+
+app.listen(8000, () => {
+    console.log("Server running on port 8000");
+});
+
+--------------------------------
+4. FEATURES OF EXPRESS
+--------------------------------
+- Minimal and flexible
+- Easy routing
+- Middleware support
+- Fast API development
+- Supports templating engines
+
+--------------------------------
+5. ROUTING
+--------------------------------
+Routing means handling different URLs.
+
+Example:
+
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => {
+    res.send("Home Page");
+});
+
+app.get("/about", (req, res) => {
+    res.send("About Page");
+});
+
+app.listen(8000);
+
+Explanation:
+- app.get() → handles GET request
+- req → request object
+- res → response object
+- res.send() → send response
+
+--------------------------------
+6. MIDDLEWARE
+--------------------------------
+Middleware is a function that runs between request and response.
+
+Syntax:
+
+app.use((req, res, next) => {
+    console.log("Middleware running");
+    next();
+});
+
+Why use middleware?
+- Logging
+- Authentication
+- Data parsing
+- Error handling
+
+Example:
+
+app.use((req, res, next) => {
+    console.log("Request received");
+    next();
+});
+
+app.get("/", (req, res) => {
+    res.send("Hello");
+});
+
+--------------------------------
+7. TEMPLATING
+--------------------------------
+Templating is used to generate dynamic HTML pages.
+
+Popular engines:
+- EJS
+- Pug
+- Handlebars
+
+Install EJS:
+npm install ejs
+
+Setup:
+app.set("view engine", "ejs");
+
+Example:
+app.get("/", (req, res) => {
+    res.render("index", { name: "Shrii" });
+});
+
+--------------------------------
+8. RESTFUL API
+--------------------------------
+REST API is based on HTTP methods.
+
+Methods:
+GET    → Fetch data
+POST   → Create data
+PUT    → Update data
+DELETE → Delete data
+
+Example:
+
+const express = require("express");
+const app = express();
+
+app.use(express.json());
+
+app.get("/users", (req, res) => {
+    res.send("Get all users");
+});
+
+app.post("/users", (req, res) => {
+    res.send("Create user");
+});
+
+app.put("/users/:id", (req, res) => {
+    res.send("Update user");
+});
+
+app.delete("/users/:id", (req, res) => {
+    res.send("Delete user");
+});
+
+app.listen(8000);
+
+--------------------------------
+END OF NOTES
+--------------------------------
+
+
+===============================
+EXPRESS.JS: TAKING DATA FROM CLIENT
+===============================
+
+1️⃣ REQ.BODY (Body Data / POST data)
+-----------------------------------
+- Used to get data sent in the **request body**, usually with POST, PUT, PATCH methods.
+- Requires middleware: 
+    app.use(express.json());
+
+Example:
+app.post("/products", (req, res) => {
+    let data = req.body; // { "name": "Laptop", "price": 50000 }
+    res.send({status:1, received: data});
+});
+
+Explanation:
+- req.body contains JSON or form data sent by client
+- Typically used for creating or updating data
+- Without express.json(), req.body will be undefined
+
+-----------------------------------
+2️⃣ REQ.QUERY (Query Parameters)
+-----------------------------------
+- Used to get **URL query parameters**
+- Query parameters are in the URL after `?`
+
+Example:
+GET http://localhost:8000/search?term=node&sort=asc
+
+Express code:
+app.get("/search", (req, res) => {
+    let term = req.query.term; // "node"
+    let sort = req.query.sort; // "asc"
+    res.send({status:1, term, sort});
+});
+
+Explanation:
+- req.query is always an object
+- Query params are optional
+- Commonly used for filtering, searching, pagination
+
+-----------------------------------
+3️⃣ REQ.PARAMS (Route Parameters)
+-----------------------------------
+- Used to capture **dynamic segments in the URL**
+- Route parameters are part of the URL path
+
+Example:
+GET http://localhost:8000/users/123
+
+Express code:
+app.get("/users/:id", (req, res) => {
+    let userId = req.params.id; // "123"
+    res.send({status:1, userId});
+});
+
+Explanation:
+- req.params contains values of dynamic parts of the route
+- Useful for fetching/updating/deleting specific resource by ID
+- Multiple params are possible: "/users/:userId/orders/:orderId"
+
+-----------------------------------
+✅ SUMMARY
+-----------------------------------
+| Source     | Method Example      | Access           | Use Case                       |
+|-----------|-------------------|-----------------|--------------------------------|
+| Body      | POST /products     | req.body        | Creating/updating resource     |
+| Query     | GET /search?term=  | req.query       | Filtering/searching/pagination|
+| Params    | GET /users/:id     | req.params      | Fetch/update/delete specific resource|
+
+-----------------------------------
+🔥 BEST PRACTICES
+-----------------------------------
+1. Always use app.use(express.json()) for POST/PUT data
+2. Validate req.body before saving to DB
+3. Use query for optional filters
+4. Use params for required identifiers (like ID)
+5. Combine body, query, params carefully in complex APIs
+
+
+
+
+
+
+
+
+
+
+
+
+
+===============================
+MIDDLEWARE IN EXPRESS.JS
+===============================
+
+1️⃣ WHAT IS MIDDLEWARE?
+-----------------------
+Middleware is a function that runs between the request (req) and response (res) cycle.
+
+Flow:
+Client Request → Middleware → Route Handler → Response
+
+Definition:
+Middleware functions have access to:
+- req (request object)
+- res (response object)
+- next (function to pass control)
+
+Syntax:
+app.use((req, res, next) => {
+    // do something
+    next(); // must call to move forward
+});
+
+-----------------------------------
+2️⃣ WHY USE MIDDLEWARE?
+-----------------------------------
+Middleware is used for:
+✔ Logging requests
+✔ Authentication & authorization
+✔ Parsing data (JSON, form data)
+✔ Error handling
+✔ Modifying request/response
+✔ Security checks
+
+-----------------------------------
+3️⃣ TYPES OF MIDDLEWARE
+-----------------------------------
+
+A) Application-level Middleware
+--------------------------------
+- Applied globally using app.use()
+
+Example:
+app.use((req, res, next) => {
+    console.log("Middleware executed");
+    next();
+});
+
+➡ Runs for every request
+
+-----------------------------------
+
+B) Route-level Middleware
+--------------------------------
+- Applied to specific routes only
+
+Example:
+app.get("/profile", (req, res, next) => {
+    console.log("Profile middleware");
+    next();
+}, (req, res) => {
+    res.send("Profile Page");
+});
+
+➡ Runs only for "/profile"
+
+-----------------------------------
+
+C) Built-in Middleware
+--------------------------------
+Provided by Express:
+
+1. express.json()
+   → Parses JSON body
+
+2. express.urlencoded()
+   → Parses form data
+
+Example:
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+-----------------------------------
+
+D) Third-party Middleware
+--------------------------------
+Installed via npm
+
+Examples:
+- morgan → logging
+- cors → cross-origin requests
+- helmet → security
+
+Example:
+const cors = require("cors");
+app.use(cors());
+
+-----------------------------------
+
+E) Error-handling Middleware
+--------------------------------
+Special middleware with 4 parameters
+
+Syntax:
+app.use((err, req, res, next) => {
+    res.status(500).send("Something went wrong");
+});
+
+➡ Used for handling errors globally
+
+-----------------------------------
+4️⃣ HOW NEXT() WORKS
+-----------------------------------
+- next() passes control to next middleware
+- If not called → request gets stuck
+
+Example:
+app.use((req, res, next) => {
+    console.log("Step 1");
+    next();
+});
+
+app.use((req, res, next) => {
+    console.log("Step 2");
+    next();
+});
+
+➡ Output:
+Step 1
+Step 2
+
+-----------------------------------
+5️⃣ REAL EXAMPLE (AUTH MIDDLEWARE)
+-----------------------------------
+const auth = (req, res, next) => {
+    let isLoggedIn = true;
+
+    if (isLoggedIn) {
+        next(); // allow access
+    } else {
+        res.send("Unauthorized");
+    }
+};
+
+app.get("/dashboard", auth, (req, res) => {
+    res.send("Welcome to dashboard");
+});
+
+-----------------------------------
+6️⃣ ORDER OF MIDDLEWARE
+-----------------------------------
+Order matters in Express!
+
+Example:
+app.use(middleware1);
+app.use(middleware2);
+
+➡ middleware1 runs first, then middleware2
+
+-----------------------------------
+7️⃣ MULTIPLE MIDDLEWARE
+-----------------------------------
+app.get("/data", middleware1, middleware2, (req, res) => {
+    res.send("Final Response");
+});
+
+-----------------------------------
+8️⃣ COMMON MISTAKES
+-----------------------------------
+❌ Forgetting next() → request hangs
+❌ Using middleware after routes → won’t execute
+❌ Not handling errors properly
+❌ Logging full req object (too heavy)
+
+-----------------------------------
+9️⃣ BEST PRACTICES
+-----------------------------------
+✔ Keep middleware small & reusable
+✔ Use separate files for middleware
+✔ Use built-in + trusted third-party middleware
+✔ Always handle errors
+✔ Place middleware before routes
+
+-----------------------------------
+🔟 SUMMARY
+-----------------------------------
+- Middleware = function between request & response
+- Uses (req, res, next)
+- Controls flow of application
+- Essential for real-world APIs
+
+---------------------------------------
+END OF MIDDLEWARE NOTES
+---------------------------------------

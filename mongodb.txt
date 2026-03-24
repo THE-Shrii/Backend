@@ -1,0 +1,613 @@
+// =======================================================
+// INTRODUCTION TO MONGODB
+// =======================================================
+
+
+// ===============================
+// 1️⃣ WHAT IS MONGODB?
+// ===============================
+
+// MongoDB is a NoSQL (Non-Relational) database
+// It stores data in JSON-like format called BSON (Binary JSON)
+
+// Developed by: MongoDB Inc.
+// Type: Document-Oriented Database
+
+// Instead of tables (like SQL), MongoDB uses:
+// → Collections
+// → Documents
+
+
+// ===============================
+// 2️⃣ KEY TERMINOLOGY
+// ===============================
+
+// SQL vs MongoDB
+
+// Table        → Collection
+// Row          → Document
+// Column       → Field
+// Database     → Database
+
+// Example:
+
+// SQL Table:
+// id | name
+// 1  | Shrii
+
+// MongoDB Document:
+{
+    id: 1,
+    name: "Shrii"
+}
+
+
+// ===============================
+// 3️⃣ FEATURES OF MONGODB
+// ===============================
+
+// 1. Schema-less
+//    → No fixed structure
+//    → Each document can have different fields
+
+// 2. High Performance
+//    → Fast read/write operations
+
+// 3. Scalable
+//    → Supports horizontal scaling (sharding)
+
+// 4. Flexible Data Model
+//    → Supports nested objects & arrays
+
+// 5. Indexing Support
+//    → Improves query performance
+
+// 6. Replication
+//    → Data backup & high availability
+
+
+// ===============================
+// 4️⃣ DATABASE STRUCTURE
+// ===============================
+
+// MongoDB Structure:
+
+// Database
+//   └── Collection
+//         └── Document
+//               └── Fields
+
+// Example:
+
+// Database: school
+// Collection: students
+
+{
+    name: "Shrii",
+    age: 20,
+    course: "BCA"
+}
+
+
+// ===============================
+// 5️⃣ INSTALLATION (BASIC STEPS)
+// ===============================
+
+// Step 1: Download MongoDB Community Server
+// https://www.mongodb.com
+
+// Step 2: Install it
+
+// Step 3: Start MongoDB service
+
+// Step 4: Use MongoDB Compass (GUI) OR Mongo Shell
+
+
+
+
+
+
+// =======================================================
+// MONGODB CRUD OPERATIONS (CREATE, READ, UPDATE, DELETE)
+// =======================================================
+
+
+// ===============================
+// 1️⃣ CREATE (INSERT DATA)
+// ===============================
+
+// Insert ONE document
+db.users.insertOne({
+    name: "Shrii",
+    age: 21,
+    city: "Delhi"
+})
+
+// Insert MULTIPLE documents
+db.users.insertMany([
+    { name: "Alice", age: 22 },
+    { name: "Bob", age: 25 }
+])
+
+// 🔹 Note:
+// - Collection auto-created if not exists
+// - _id is automatically generated
+
+
+// ===============================
+// 2️⃣ READ (FETCH DATA)
+// ===============================
+
+// Get ALL documents
+db.users.find()
+
+// Pretty format (readable)
+db.users.find().pretty()
+
+// Find with condition
+db.users.find({ name: "Shrii" })
+
+// Find ONE document
+db.users.findOne({ name: "Alice" })
+
+
+// ===============================
+// 3️⃣ UPDATE (MODIFY DATA)
+// ===============================
+
+// Update ONE document
+db.users.updateOne(
+    { name: "Shrii" },          // condition
+    { $set: { age: 22 } }      // update
+)
+
+// Update MULTIPLE documents
+db.users.updateMany(
+    { age: { $gt: 20 } },
+    { $set: { status: "active" } }
+)
+
+// Add new field
+db.users.updateOne(
+    { name: "Alice" },
+    { $set: { city: "Mumbai" } }
+)
+
+
+// ===============================
+// 4️⃣ DELETE (REMOVE DATA)
+// ===============================
+
+// Delete ONE document
+db.users.deleteOne({ name: "Bob" })
+
+// Delete MULTIPLE documents
+db.users.deleteMany({ age: { $lt: 20 } })
+
+
+// ===============================
+// 📌 COMPLETE FLOW EXAMPLE
+// ===============================
+
+// Step 1: Insert
+db.users.insertOne({ name: "Test", age: 20 })
+
+// Step 2: Read
+db.users.find({ name: "Test" })
+
+// Step 3: Update
+db.users.updateOne(
+    { name: "Test" },
+    { $set: { age: 25 } }
+)
+
+// Step 4: Delete
+db.users.deleteOne({ name: "Test" })
+
+
+// ===============================
+// ⚡ IMPORTANT POINTS
+// ===============================
+
+// ✔ Use $set to update fields
+// ✔ Conditions work like filters
+// ✔ _id is unique identifier
+// ✔ updateOne vs updateMany difference
+// ✔ deleteOne vs deleteMany difference
+
+
+
+
+
+
+
+
+
+
+
+// ===============================
+// 6️⃣ BASIC COMMANDS (MONGO SHELL)
+// ===============================
+
+// Show all databases
+show dbs
+
+// Create / Switch database
+use myDatabase
+
+// Create collection & insert data
+db.users.insertOne({
+    name: "Shrii",
+    age: 21
+})
+
+// Show collections
+show collections
+
+// Fetch data
+db.users.find()
+
+// Pretty format
+db.users.find().pretty()
+
+
+// ===============================
+// 7️⃣ CRUD OPERATIONS
+// ===============================
+
+// CREATE
+db.users.insertOne({ name: "Shrii" })
+
+// READ
+db.users.find({ name: "Shrii" })
+
+// UPDATE
+db.users.updateOne(
+    { name: "Shrii" },
+    { $set: { age: 22 } }
+)
+
+// DELETE
+db.users.deleteOne({ name: "Shrii" })
+
+
+// ===============================
+// 8️⃣ WHY USE MONGODB?
+// ===============================
+
+// ✔ Good for large-scale apps
+// ✔ Flexible data structure
+// ✔ Works well with Node.js (JSON based)
+// ✔ Fast development
+
+
+// ===============================
+// 9️⃣ MONGODB WITH NODE.JS
+// ===============================
+
+// Install mongoose (ODM)
+npm install mongoose
+
+// Connect to MongoDB
+
+const mongoose = require("mongoose");
+
+mongoose.connect("mongodb://127.0.0.1:27017/myDB")
+.then(() => console.log("DB Connected"))
+.catch(err => console.log(err));
+
+
+// ===============================
+// 🔟 REAL-WORLD EXAMPLE DOCUMENT
+// ===============================
+
+{
+    name: "Shrii",
+    email: "shrii@gmail.com",
+    skills: ["JS", "Node", "MongoDB"],
+    address: {
+        city: "Delhi",
+        pincode: 110001
+    }
+}
+
+
+// ===============================
+// 1️⃣1️⃣ ADVANTAGES
+// ===============================
+
+// ✔ No schema restriction
+// ✔ Easy to scale
+// ✔ High speed
+// ✔ JSON format (easy with JS)
+
+
+// ===============================
+// 1️⃣2️⃣ DISADVANTAGES
+// ===============================
+
+// ❌ No joins like SQL (limited)
+// ❌ Data duplication possible
+// ❌ Not ideal for complex transactions
+
+
+// ===============================
+// 📌 CONCLUSION
+// ===============================
+
+// MongoDB is a modern NoSQL database
+// Best suited for dynamic, scalable applications
+
+// Widely used with MERN stack (MongoDB, Express, React, Node)
+
+
+
+
+
+// =======================================================
+// CREATING COLLECTION IN MONGODB
+// =======================================================
+
+
+// ===============================
+// 1️⃣ WHAT IS A COLLECTION?
+// ===============================
+
+// A collection is a group of documents (like a table in SQL)
+
+// Example:
+// Database → school
+// Collection → students
+// Document → { name: "Shrii", age: 21 }
+
+
+// ===============================
+// 2️⃣ METHOD 1: AUTO CREATION (MOST COMMON)
+// ===============================
+
+// MongoDB automatically creates collection when you insert data
+
+db.users.insertOne({
+    name: "Shrii",
+    age: 21
+})
+
+// ✔ If "users" collection does not exist → it will be created automatically
+
+
+// ===============================
+// 3️⃣ METHOD 2: MANUAL CREATION
+// ===============================
+
+// Create collection explicitly
+db.createCollection("users")
+
+
+// ===============================
+// 4️⃣ VERIFY COLLECTION
+// ===============================
+
+// Show all collections
+show collections
+
+
+// ===============================
+// 5️⃣ CREATE COLLECTION WITH OPTIONS
+// ===============================
+
+// Example with size limit (capped collection)
+db.createCollection("logs", {
+    capped: true,
+    size: 5242880,   // size in bytes (5MB)
+    max: 5000        // max documents
+})
+
+
+// ===============================
+// 6️⃣ DROP COLLECTION (DELETE)
+// ===============================
+
+// Delete collection
+db.users.drop()
+
+
+// ===============================
+// 📌 IMPORTANT POINTS
+// ===============================
+
+// ✔ MongoDB does NOT require pre-creation
+// ✔ Collections are schema-less
+// ✔ Documents inside same collection can have different structure
+// ✔ Auto-creation is mostly used in real projects
+
+
+// ===============================
+// ⚡ INTERVIEW POINT
+// ===============================
+
+// Q: When is createCollection used?
+// A: When you need special options like:
+//    → capped collection
+//    → validation rules
+//    → size limits
+
+
+
+
+
+
+
+
+
+
+// =======================================================
+// MONGODB COMMANDS (CHEAT SHEET)
+// =======================================================
+
+
+// ===============================
+// 1️⃣ DATABASE COMMANDS
+// ===============================
+
+// Show all databases
+show dbs
+
+// Create / Switch database
+use myDatabase
+
+// Check current database
+db
+
+
+// ===============================
+// 2️⃣ COLLECTION COMMANDS
+// ===============================
+
+// Show collections
+show collections
+
+// Create collection
+db.createCollection("users")
+
+// Drop collection
+db.users.drop()
+
+
+// ===============================
+// 3️⃣ INSERT (CREATE DATA)
+// ===============================
+
+// Insert one document
+db.users.insertOne({
+    name: "Shrii",
+    age: 21
+})
+
+// Insert multiple documents
+db.users.insertMany([
+    { name: "Alice", age: 22 },
+    { name: "Bob", age: 25 }
+])
+
+
+// ===============================
+// 4️⃣ READ (FETCH DATA)
+// ===============================
+
+// Get all documents
+db.users.find()
+
+// Pretty format
+db.users.find().pretty()
+
+// Find with condition
+db.users.find({ name: "Shrii" })
+
+// Find one document
+db.users.findOne({ name: "Alice" })
+
+
+// ===============================
+// 5️⃣ UPDATE COMMANDS
+// ===============================
+
+// Update one document
+db.users.updateOne(
+    { name: "Shrii" },           // condition
+    { $set: { age: 22 } }       // update
+)
+
+// Update multiple documents
+db.users.updateMany(
+    { age: { $gt: 20 } },
+    { $set: { status: "active" } }
+)
+
+
+// ===============================
+// 6️⃣ DELETE COMMANDS
+// ===============================
+
+// Delete one document
+db.users.deleteOne({ name: "Bob" })
+
+// Delete multiple documents
+db.users.deleteMany({ age: { $lt: 20 } })
+
+
+// ===============================
+// 7️⃣ QUERY OPERATORS
+// ===============================
+
+// Greater than
+db.users.find({ age: { $gt: 20 } })
+
+// Less than
+db.users.find({ age: { $lt: 25 } })
+
+// AND condition
+db.users.find({ age: { $gt: 20 }, name: "Shrii" })
+
+// OR condition
+db.users.find({
+    $or: [{ name: "Alice" }, { age: 25 }]
+})
+
+
+// ===============================
+// 8️⃣ SORT & LIMIT
+// ===============================
+
+// Sort ascending (1)
+db.users.find().sort({ age: 1 })
+
+// Sort descending (-1)
+db.users.find().sort({ age: -1 })
+
+// Limit results
+db.users.find().limit(2)
+
+
+// ===============================
+// 9️⃣ COUNT
+// ===============================
+
+// Count documents
+db.users.countDocuments()
+
+
+// ===============================
+// 🔟 DROP DATABASE
+// ===============================
+
+// Delete current database
+db.dropDatabase()
+
+
+// ===============================
+// 📌 IMPORTANT NOTES
+// ===============================
+
+// 1. MongoDB is case-sensitive
+// 2. Collections auto-create on insert
+// 3. _id is automatically added
+// 4. Use $set for updating fields
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
